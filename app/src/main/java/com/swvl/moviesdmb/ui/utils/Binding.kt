@@ -14,28 +14,31 @@ import com.swvl.moviesdmb.ui.moviedetail.adapter.TrailerAdapter
 
 
 @BindingAdapter("image")
-fun loadImage(view: ImageView, url: String) {
-
-    Glide.with(view).load(BuildConfig.TMDB_PHOTO_BASE_URL.plus(url)).into(view)
+fun loadImage(view: ImageView, url: String?) {
+    if (!url.isNullOrEmpty()) {
+        Glide.with(view).load(BuildConfig.TMDB_PHOTO_BASE_URL.plus(url)).into(view)
+    }
 }
 
 @BindingAdapter("castImage")
-fun loadCastImage(view: ImageView, url: String) {
-
+fun loadCastImage(view: ImageView, url: String?) {
     Glide.with(view).load(BuildConfig.TMDB_PHOTO_BASE_URL.plus(url))
         .placeholder(R.drawable.cast_icon)
         .into(view)
+
 }
 
 @BindingAdapter("youTubeImage")
-fun loadYouTubeImage(view: ImageView, trailer: Trailer) {
-    val options = RequestOptions()
-        .placeholder(R.color.colorPrimary)
-        .centerCrop()
-        .override(150, 150)
-    Glide.with(view).load(getThumbnailUrl(trailer))
-        .placeholder(R.drawable.youtube).apply(options)
-        .into(view)
+fun loadYouTubeImage(view: ImageView, trailer: Trailer?) {
+    if (trailer != null) {
+        val options = RequestOptions()
+            .placeholder(R.color.colorPrimary)
+            .centerCrop()
+            .override(150, 150)
+        Glide.with(view).load(getThumbnailUrl(trailer))
+            .placeholder(R.drawable.youtube).apply(options)
+            .into(view)
+    }
 }
 
 @BindingAdapter("android:visibility")
