@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.swvl.moviesdmb.models.Cast" />
+    </data>
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/two_dp"
+    android:layout_marginTop="@dimen/card_margin"
+    android:layout_marginEnd="@dimen/two_dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/one_five_zero_dp"
+        android:layout_height="@dimen/one_nine_zero_dp"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="@dimen/four_dp"
+        app:cardElevation="@dimen/two_dp"
+        app:cardMaxElevation="@dimen/two_dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                app:castImage="@{item.cast_poster}"
+                android:id="@+id/poster_character"
+                android:layout_width="@dimen/img_view_hei"
+                android:layout_height="@dimen/img_view_wid"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/tendp"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/cast_name"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/twenty_dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/three_dp"
+                android:layout_marginTop="@dimen/five_dp"
+                android:layout_marginEnd="@dimen/three_dp"
+                android:layout_marginBottom="@dimen/three_dp"
+                android:text="@{item.cast_name}"
+                android:gravity="center"
+                android:textColor="@color/black"
+                tools:text="Canada" />
+
+            <TextView
+                android:id="@+id/cast_char"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/twenty_dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/three_dp"
+                android:layout_marginEnd="@dimen/three_dp"
+                android:layout_marginBottom="@dimen/five_dp"
+                android:text="@{item.cast_character}"
+                android:gravity="center"
+                android:textColor="@color/black"
+                tools:text="Canada" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
+</layout>
