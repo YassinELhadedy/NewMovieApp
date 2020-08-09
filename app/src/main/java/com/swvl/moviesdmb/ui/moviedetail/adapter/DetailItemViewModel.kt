@@ -1,4 +1,4 @@
-package com.swvl.moviesdmb.ui.moviedetail
+package com.swvl.moviesdmb.ui.moviedetail.adapter
 
 import com.swvl.moviesdmb.models.Cast
 import com.swvl.moviesdmb.models.Review

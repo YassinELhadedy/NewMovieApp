@@ -3,6 +3,7 @@ package com.swvl.moviesdmb.ui.moviedetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.swvl.moviesdmb.models.service.DetailMovieService
+import com.swvl.moviesdmb.ui.moviedetail.adapter.DetailItemViewModel
 import com.swvl.moviesdmb.ui.utils.Resource
 import kotlinx.coroutines.Dispatchers
 

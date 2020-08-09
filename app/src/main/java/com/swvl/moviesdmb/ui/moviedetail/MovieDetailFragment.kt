@@ -15,6 +15,7 @@ import com.mindorks.retrofit.coroutines.utils.Status
 import com.swvl.moviesdmb.databinding.FragmentMovieDetailBinding
 import com.swvl.moviesdmb.models.Movie
 import com.swvl.moviesdmb.ui.moviedetail.adapter.CastAdapter
+import com.swvl.moviesdmb.ui.moviedetail.adapter.DetailItemViewModel
 import com.swvl.moviesdmb.ui.moviedetail.adapter.ReviewAdapter
 import com.swvl.moviesdmb.ui.moviedetail.adapter.TrailerAdapter
 import kotlinx.android.synthetic.main.fragment_movie_detail.view.*
