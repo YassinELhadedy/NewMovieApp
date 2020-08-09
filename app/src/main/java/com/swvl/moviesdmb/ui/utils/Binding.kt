@@ -4,13 +4,17 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.mindorks.retrofit.coroutines.utils.Status
 import com.swvl.moviesdmb.BuildConfig
 import com.swvl.moviesdmb.R
 import com.swvl.moviesdmb.models.Trailer
 import com.swvl.moviesdmb.ui.moviedetail.MovieDetailFragment
 import com.swvl.moviesdmb.ui.moviedetail.adapter.TrailerAdapter
+import com.swvl.moviesdmb.ui.movielist.adapter.MovieAdapter
+import com.swvl.moviesdmb.ui.movielist.adapter.MovieItemViewModel
 
 
 @BindingAdapter("image")
@@ -46,10 +50,37 @@ fun setVisibility(view: ProgressBar, value: String) {
     view.visibility = if (value.isEmpty()) View.VISIBLE else View.GONE
 }
 
+@BindingAdapter("android:visibilityStatus")
+fun setVisibilityStatus(view: ProgressBar, value: Status?) {
+    view.visibility =
+        when (value) {
+            Status.SUCCESS -> {
+                View.GONE
+            }
+            Status.ERROR -> {
+                View.GONE
+            }
+            else -> {
+                View.VISIBLE
+            }
+        }
+}
+
 fun getThumbnailUrl(trailer: Trailer): String? {
     return if (TrailerAdapter.SITE_YOUTUBE.equals(trailer.site, ignoreCase = true)) {
         String.format(MovieDetailFragment.YOUTUBE_THUMBNAIL_URL, trailer.videoId)
     } else {
         TrailerAdapter.EMPTY
+    }
+}
+
+@BindingAdapter("app:items")
+fun setItems(listView: RecyclerView, items: List<MovieItemViewModel>?) {
+    items?.let {
+        listView.visibility = View.VISIBLE
+        (listView.adapter as MovieAdapter).apply {
+            addMovies(items)
+            notifyDataSetChanged()
+        }
     }
 }

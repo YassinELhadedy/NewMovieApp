@@ -16,8 +16,8 @@ class DetailMovieService(
 
     suspend fun getDetailMovie(movieId: String): DetailItemViewModel {
         coroutineScope {
-            val trailersDeferred = async { trailersRepository.getTrailersOfMovie(movieId) }
-            val reviewsDeferred = async { reviewsRepository.getReviewsOfMovie(movieId) }
+            val trailersDeferred = async { trailersRepository.getAllById(movieId.toInt()) }
+            val reviewsDeferred = async { reviewsRepository.getAllById(movieId.toInt()) }
             val castsDeferred = async { castRepository.getCastsOfMovie(movieId.toInt()) }
             item = DetailItemViewModel(
                 castsDeferred.await(),

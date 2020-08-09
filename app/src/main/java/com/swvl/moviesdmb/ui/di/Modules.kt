@@ -23,7 +23,7 @@ val applicationModule = module {
 
 
     // View Models
-    viewModel { PopularMovieListViewModel(get()) }
+    viewModel { PopularMovieListViewModel(MoviesRepository(get())) }
     viewModel { MovieDetailViewModel(get()) }
 
 }

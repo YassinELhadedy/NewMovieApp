@@ -11,18 +11,17 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mindorks.retrofit.coroutines.utils.Status
-import com.swvl.moviesdmb.R
+import com.swvl.moviesdmb.databinding.FragmentMovieListBinding
 import com.swvl.moviesdmb.models.Movie
 import com.swvl.moviesdmb.ui.movielist.adapter.MovieAdapter
-import com.swvl.moviesdmb.ui.movielist.adapter.MovieItemViewModel
+import com.swvl.moviesdmb.ui.utils.Resource
 import kotlinx.android.synthetic.main.fragment_movie_list.*
-import kotlinx.android.synthetic.main.fragment_movie_list.view.*
 import org.koin.android.ext.android.inject
 
 class PopularMovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
-    private lateinit var rootView: View
     private lateinit var adapter: MovieAdapter
     private val popularMovieListViewModel: PopularMovieListViewModel by inject()
+    private lateinit var viewDataBinding: FragmentMovieListBinding
 
 
     override fun onCreateView(
@@ -30,53 +29,47 @@ class PopularMovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_movie_list, container, false)
+        viewDataBinding = FragmentMovieListBinding.inflate(inflater, container, false)
 
         setupUI()
         setupObservers()
 
-        return rootView
+        return viewDataBinding.root
     }
 
     private fun setupUI() {
-        rootView.recyclerView.layoutManager = GridLayoutManager(requireContext(),2)
+        viewDataBinding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         adapter = MovieAdapter(requireContext(), mutableListOf(), this)
-        rootView.recyclerView.addItemDecoration(
+        viewDataBinding.recyclerView.addItemDecoration(
             DividerItemDecoration(
-                rootView.recyclerView.context,
-                (rootView.recyclerView.layoutManager as LinearLayoutManager).orientation
+                viewDataBinding.recyclerView.context,
+                (viewDataBinding.recyclerView.layoutManager as LinearLayoutManager).orientation
             )
         )
-        rootView.recyclerView.adapter = adapter
+        viewDataBinding.recyclerView.adapter = adapter
     }
 
     private fun setupObservers() {
-        popularMovieListViewModel.getPopularMovieList().observe(requireActivity(), Observer {
+        popularMovieListViewModel.moviesItem.observe(requireActivity(), Observer {
             it?.let { resource ->
-                when (resource.status) {
+                when (resource.status) {//TODO : we should observe in VM instead of here.
                     Status.SUCCESS -> {
-                        recyclerView.visibility = View.VISIBLE
-                        progressBar.visibility = View.GONE
-                        resource.data?.let { movies -> retrieveList(movies) }
+                        resource.data?.let { movies ->
+                            popularMovieListViewModel.items = Resource(Status.SUCCESS, movies, null)
+                        }
                     }
                     Status.ERROR -> {
-                        recyclerView.visibility = View.VISIBLE
-                        progressBar.visibility = View.GONE
+                        popularMovieListViewModel.items = Resource(Status.ERROR, null, null)
+
                     }
                     Status.LOADING -> {
-                        progressBar.visibility = View.VISIBLE
-                        recyclerView.visibility = View.GONE
+                        popularMovieListViewModel.items = Resource(Status.LOADING, null, null)
+
                     }
                 }
+                viewDataBinding.viewmodel = popularMovieListViewModel
             }
         })
-    }
-
-    private fun retrieveList(movies: List<MovieItemViewModel>) {
-        adapter.apply {
-            addMovies(movies)
-            notifyDataSetChanged()
-        }
     }
 
     override fun onClickMovie(movie: Movie) {
@@ -84,9 +77,10 @@ class PopularMovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
     }
 
     private fun openMovieDetailFragment(movie: Movie) {
-
         val action =
-            PopularMovieListFragmentDirections.actionPopularMovieListFragmentToMovieDetailFragment(movie)
+            PopularMovieListFragmentDirections.actionPopularMovieListFragmentToMovieDetailFragment(
+                movie
+            )
         findNavController().navigate(action)
     }
 }
