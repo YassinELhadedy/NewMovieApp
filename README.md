@@ -1,4 +1,4 @@
-# NewMovieApp implemented DDD.
+# NewMovieApp implemented DDD & Android Architecture Component..
 New Movie App with Latest Anroid Navigation Component.
 Library, Frameworks and Design patterns:
 Mvvm data binding- Live Data- Navigation graph
