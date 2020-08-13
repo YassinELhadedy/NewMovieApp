@@ -8,13 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.swvl.moviesdmb.R
 import com.swvl.moviesdmb.databinding.MovieCardsBinding
-import com.swvl.moviesdmb.models.Movie
+import com.swvl.moviesdmb.ui.movielist.PopularMovieListViewModel
 import com.swvl.moviesdmb.ui.movielist.adapter.MovieAdapter.MovieViewHolder
 
 class MovieAdapter(
     private val context: Context,
     private val movies: MutableList<MovieItemViewModel>,
-    private var mListener: OnMovieClickListener
+    private val viewModel: PopularMovieListViewModel
 ) : RecyclerView.Adapter<MovieViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): MovieViewHolder =
@@ -29,9 +29,8 @@ class MovieAdapter(
 
     override fun onBindViewHolder(viewHolder: MovieViewHolder, position: Int) {
         viewHolder.movieCardsBinding.item = movies[position]
-        viewHolder.movieCardsBinding.root.setOnClickListener {
-            mListener.onClickMovie(movies[position].toMovie())
-        }
+        viewHolder.movieCardsBinding.viewModel = viewModel
+
         val animation = AnimationUtils.loadAnimation(
             context,
             R.anim.anim_bottom
@@ -53,8 +52,4 @@ class MovieAdapter(
 
     inner class MovieViewHolder(val movieCardsBinding: MovieCardsBinding) :
         RecyclerView.ViewHolder(movieCardsBinding.root)
-
-    interface OnMovieClickListener {
-        fun onClickMovie(movie: Movie)
-    }
 }

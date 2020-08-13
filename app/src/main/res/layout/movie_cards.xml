@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="com.swvl.moviesdmb.ui.movielist.PopularMovieListViewModel" />
+
+        <variable
             name="item"
             type="com.swvl.moviesdmb.ui.movielist.adapter.MovieItemViewModel" />
     </data>
@@ -24,7 +28,8 @@
             android:clipToPadding="true"
             android:paddingTop="@dimen/card_margin"
             app:cardCornerRadius="@dimen/five_dp"
-            app:cardElevation="@dimen/five_dp">
+            app:cardElevation="@dimen/five_dp"
+            android:onClick="@{() -> viewModel.openMovie(item.toMovie())}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

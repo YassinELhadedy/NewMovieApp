@@ -7,18 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mindorks.retrofit.coroutines.utils.Status
 import com.swvl.moviesdmb.databinding.FragmentMovieListBinding
 import com.swvl.moviesdmb.models.Movie
 import com.swvl.moviesdmb.ui.movielist.adapter.MovieAdapter
-import com.swvl.moviesdmb.ui.utils.Resource
-import kotlinx.android.synthetic.main.fragment_movie_list.*
+import com.swvl.moviesdmb.ui.utils.EventObserver
 import org.koin.android.ext.android.inject
 
-class PopularMovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
+class PopularMovieListFragment : Fragment() {
     private lateinit var adapter: MovieAdapter
     private val popularMovieListViewModel: PopularMovieListViewModel by inject()
     private lateinit var viewDataBinding: FragmentMovieListBinding
@@ -33,20 +30,15 @@ class PopularMovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
 
         setupUI()
         setupObservers()
+        setupNavigation()
 
         return viewDataBinding.root
     }
 
     private fun setupUI() {
-        viewDataBinding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        adapter = MovieAdapter(requireContext(), mutableListOf(), this)
-        viewDataBinding.recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                viewDataBinding.recyclerView.context,
-                (viewDataBinding.recyclerView.layoutManager as LinearLayoutManager).orientation
-            )
-        )
-        viewDataBinding.recyclerView.adapter = adapter
+        viewDataBinding.moviesList.layoutManager = GridLayoutManager(requireContext(), 2)
+        adapter = MovieAdapter(requireContext(), mutableListOf(), popularMovieListViewModel)
+        viewDataBinding.moviesList.adapter = adapter
     }
 
     private fun setupObservers() {
@@ -55,16 +47,12 @@ class PopularMovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
                 when (resource.status) {//TODO : we should observe in VM instead of here.
                     Status.SUCCESS -> {
                         resource.data?.let { movies ->
-                            popularMovieListViewModel.items = Resource(Status.SUCCESS, movies, null)
+                            popularMovieListViewModel.items = movies
                         }
                     }
                     Status.ERROR -> {
-                        popularMovieListViewModel.items = Resource(Status.ERROR, null, null)
-
                     }
                     Status.LOADING -> {
-                        popularMovieListViewModel.items = Resource(Status.LOADING, null, null)
-
                     }
                 }
                 viewDataBinding.viewmodel = popularMovieListViewModel
@@ -72,8 +60,10 @@ class PopularMovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
         })
     }
 
-    override fun onClickMovie(movie: Movie) {
-        openMovieDetailFragment(movie)
+    private fun setupNavigation() {
+        popularMovieListViewModel.openMovieEvent.observe(viewLifecycleOwner, EventObserver {
+            openMovieDetailFragment(it)
+        })
     }
 
     private fun openMovieDetailFragment(movie: Movie) {
