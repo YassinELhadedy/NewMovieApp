@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@+id/popularMovieListFragment">
+    app:startDestination="@+id/pagingMovieListFragment">
 
     <fragment
         android:id="@+id/popularMovieListFragment"
@@ -28,4 +28,9 @@
             app:argType="com.swvl.moviesdmb.models.Movie" />
 
     </fragment>
+    <fragment
+        android:id="@+id/pagingMovieListFragment"
+        android:name="com.swvl.moviesdmb.ui.moviepaginglist.PagingMovieListFragment"
+        android:label="fragment_paging_movie_list"
+        tools:layout="@layout/fragment_paging_movie_list" />
 </navigation>

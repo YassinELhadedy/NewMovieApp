@@ -1,5 +1,8 @@
 package com.swvl.moviesdmb.models
 
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+
 /**
  * GetAllRepository
  */

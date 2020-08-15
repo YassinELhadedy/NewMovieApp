@@ -12,7 +12,7 @@ data class Movie(
     @PrimaryKey val id: Int,
     @ColumnInfo val overview: String,
     @ColumnInfo val releaseDate: String,
-    @ColumnInfo val posterPath: String,
+    @ColumnInfo val posterPath: String?,
     @ColumnInfo val backdropPath: String?,
     @ColumnInfo val originalTitle: String,
     @ColumnInfo val title: String,
