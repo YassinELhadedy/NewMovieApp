@@ -4,17 +4,22 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mindorks.retrofit.coroutines.utils.Status
 import com.swvl.moviesdmb.BuildConfig
 import com.swvl.moviesdmb.R
+import com.swvl.moviesdmb.models.Movie
 import com.swvl.moviesdmb.models.Trailer
 import com.swvl.moviesdmb.ui.moviedetail.MovieDetailFragment
 import com.swvl.moviesdmb.ui.moviedetail.adapter.TrailerAdapter
 import com.swvl.moviesdmb.ui.movielist.adapter.MovieAdapter
 import com.swvl.moviesdmb.ui.movielist.adapter.MovieItemViewModel
+import com.swvl.moviesdmb.ui.moviepaginglist.adapter.PagingMovieAdapter
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 @BindingAdapter("image")
@@ -81,6 +86,19 @@ fun setItems(listView: RecyclerView, items: List<MovieItemViewModel>?) {
         (listView.adapter as MovieAdapter).apply {
             addMovies(items)
             notifyDataSetChanged()
+        }
+    }
+}
+
+@BindingAdapter("app:pagingItems")
+fun setPagingItems(listView: RecyclerView, items: PagingData<Movie>?) {
+    GlobalScope.launch {
+
+        items?.let {
+            listView.visibility = View.VISIBLE
+            (listView.adapter as PagingMovieAdapter).apply {
+                this.submitData(items)
+            }
         }
     }
 }

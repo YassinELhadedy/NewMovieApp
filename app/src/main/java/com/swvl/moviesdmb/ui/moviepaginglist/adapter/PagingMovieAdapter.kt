@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.swvl.moviesdmb.R
 import com.swvl.moviesdmb.models.Movie
-import com.swvl.moviesdmb.ui.movielist.PopularMovieListViewModel
+import com.swvl.moviesdmb.ui.moviepaginglist.PopularMoreMovieListViewModel
 
 /**
  * Adapter for the list of repositories.
  */
 class PagingMovieAdapter(
-    val context: Context, private val viewModel: PopularMovieListViewModel
+    val context: Context, private val viewModel: PopularMoreMovieListViewModel
 ) : PagingDataAdapter<Movie, ViewHolder>(REPO_COMPARATOR) {
 
 

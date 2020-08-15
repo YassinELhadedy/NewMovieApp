@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.swvl.moviesdmb.ui.movielist.PopularMovieListViewModel" />
+            type="com.swvl.moviesdmb.ui.moviepaginglist.PopularMoreMovieListViewModel" />
 
         <variable
             name="item"

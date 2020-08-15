@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.swvl.moviesdmb.R
-import com.swvl.moviesdmb.ui.movielist.PopularMovieListViewModel
+import com.swvl.moviesdmb.databinding.FragmentPagingMovieListBinding
+import com.swvl.moviesdmb.models.Movie
 import com.swvl.moviesdmb.ui.moviepaginglist.adapter.PagingMovieAdapter
-import kotlinx.android.synthetic.main.fragment_paging_movie_list.view.*
+import com.swvl.moviesdmb.ui.utils.EventObserver
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -18,34 +19,54 @@ import org.koin.android.ext.android.inject
 
 class PagingMovieListFragment : Fragment() {
 
-    private val popularMovieListViewModel: PopularMovieListViewModel by inject()
     private val popularMoreMovieListViewModel: PopularMoreMovieListViewModel by inject()
     private lateinit var adapter: PagingMovieAdapter
-    lateinit var rootView: View
+    private lateinit var viewDataBinding: FragmentPagingMovieListBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_paging_movie_list, container, false)
+        viewDataBinding = FragmentPagingMovieListBinding.inflate(inflater, container, false)
+
 
         initAdapter()
         search()
-        return rootView
+        setupNavigation()
+
+        return viewDataBinding.root
     }
 
     private fun initAdapter() {
-        adapter = PagingMovieAdapter(requireContext(), popularMovieListViewModel)
-        rootView.list.layoutManager = GridLayoutManager(requireContext(), 2)
-        rootView.list.adapter = adapter
+        adapter = PagingMovieAdapter(requireContext(), popularMoreMovieListViewModel)
+        viewDataBinding.moviesList.layoutManager = GridLayoutManager(requireContext(), 2)
+        viewDataBinding.moviesList.adapter = adapter
     }
 
     private fun search() {
         // Make sure we cancel the previous job before creating a new one
         lifecycleScope.launch {
             popularMoreMovieListViewModel.getPopularMovieList().collectLatest {
-                adapter.submitData(it)
+//                adapter.submitData(it)
+                popularMoreMovieListViewModel.items = it
+                viewDataBinding.viewmodel = popularMoreMovieListViewModel
+                popularMoreMovieListViewModel._dataLoading.value = false
             }
         }
+    }
+
+    private fun setupNavigation() {
+        popularMoreMovieListViewModel.openMovieEvent.observe(viewLifecycleOwner, EventObserver {
+            openMovieDetailFragment(it)
+        })
+    }
+
+    private fun openMovieDetailFragment(movie: Movie) {
+        val action =
+            PagingMovieListFragmentDirections.actionPagingMovieListFragmentToMovieDetailFragment(
+                movie
+            )
+        findNavController().navigate(action)
     }
 }

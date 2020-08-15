@@ -32,5 +32,13 @@
         android:id="@+id/pagingMovieListFragment"
         android:name="com.swvl.moviesdmb.ui.moviepaginglist.PagingMovieListFragment"
         android:label="fragment_paging_movie_list"
-        tools:layout="@layout/fragment_paging_movie_list" />
+        tools:layout="@layout/fragment_paging_movie_list" >
+        <action
+            android:id="@+id/action_pagingMovieListFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 </navigation>
