@@ -1,8 +1,9 @@
 package com.swvl.moviesdmb.infrastructure
 
-import com.swvl.moviesdmb.utils.MainCoroutineRule
+import com.swvl.moviesdmb.infrastructure.dto.MovieDTO.Companion.toMovieDTO
 import com.swvl.moviesdmb.infrastructure.dto.MovieResponse
 import com.swvl.moviesdmb.models.Movie
+import com.swvl.moviesdmb.utils.MainCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.core.IsEqual
@@ -12,6 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.anyList
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -21,8 +23,9 @@ private const val DATA_ERROR = "Unsupported field"
 @RunWith(MockitoJUnitRunner::class)
 class MovieRepositoryUnitTest {
     // Class under test
-    private lateinit var moviesRepository: MoviesRepository
-    private val dmbWebService = Mockito.mock(DmbWebService::class.java)
+    private lateinit var moviesRemoteRepository: MoviesRemoteRepository
+    private val dmbWebServiceMock = Mockito.mock(DmbWebService::class.java)
+    private val moviesLocalRepositoryMock = Mockito.mock(MoviesLocalRepository::class.java)
 
 
     // Set the main coroutines dispatcher for unit testing.
@@ -32,7 +35,7 @@ class MovieRepositoryUnitTest {
 
     @Before
     fun createRepository() {
-        moviesRepository = MoviesRepository(dmbWebService)
+        moviesRemoteRepository = MoviesRemoteRepository(dmbWebServiceMock,moviesLocalRepositoryMock)
     }
 
     @Test
@@ -40,8 +43,7 @@ class MovieRepositoryUnitTest {
         mainCoroutineRule.runBlockingTest {
             //Given
             val movies = listOf(
-                Movie(
-                    "1",
+                Movie(1,"1",
                     "overview1",
                     "date1",
                     "poster1",
@@ -50,7 +52,7 @@ class MovieRepositoryUnitTest {
                     "title1", 0.1, "en"
                 ),
                 Movie(
-                    "2",
+                    2,"2",
                     "overview2",
                     "date2",
                     "poster2",
@@ -61,15 +63,18 @@ class MovieRepositoryUnitTest {
             )
 
             Mockito.`when`(
-                dmbWebService.popularMovies(anyInt())
+                dmbWebServiceMock.popularMovies(anyInt())
             ).thenReturn(
-                MovieResponse(movies.subList(0, 1))
+                MovieResponse(movies.map { it.toMovieDTO() }.subList(0, 1))
             )
 
+
+
             //When (Action) GetAll By Page Number
-            val actualMovies = moviesRepository.getAllById(1)
+            val actualMovies = moviesRemoteRepository.getAllById(1)
 
             // Then
+            Mockito.verify(moviesLocalRepositoryMock).insertAll(anyList())
             Assert.assertThat(actualMovies.size, IsEqual(1))
             Assert.assertThat(actualMovies[0].originalTitle, IsEqual("orgTitle1"))
             Assert.assertThat(actualMovies[0].overview, IsEqual("overview1"))
@@ -80,13 +85,13 @@ class MovieRepositoryUnitTest {
         mainCoroutineRule.runBlockingTest {
             //Given
             Mockito.`when`(
-                dmbWebService.popularMovies(anyInt())
+                dmbWebServiceMock.popularMovies(anyInt())
             ).thenReturn(
                 MovieResponse(emptyList())
             )
 
             //When (Action) GetAll By Page Number
-            val actualMovies = moviesRepository.getAllById(500)
+            val actualMovies = moviesRemoteRepository.getAllById(500)
 
             // Then
             Assert.assertThat(actualMovies.size, IsEqual(0))
@@ -97,11 +102,11 @@ class MovieRepositoryUnitTest {
         mainCoroutineRule.runBlockingTest {
             //Given
             Mockito.`when`(
-                dmbWebService.popularMovies(anyInt())
+                dmbWebServiceMock.popularMovies(anyInt())
             ).thenThrow(
                 RuntimeException(DATA_ERROR)
             )
             //When (Action) GetAll By Page Number
-            moviesRepository.getAllById(-1)
+            moviesRemoteRepository.getAllById(-1)
         }
 }

@@ -22,6 +22,7 @@ data class MovieItemViewModel(
     }
 
     fun toMovie() = Movie(
+        null,
         id,
         overview,
         releaseDate,

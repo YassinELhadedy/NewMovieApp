@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.Flow
 /**
  * PostRepository
  */
-interface PostRepository<in T, out U> {
-    suspend fun insert(entity: T): Unit
+interface PostAllRepository<in T, out U> {
+    suspend fun insertAll(entity: List<T>): Unit
 }

@@ -4,33 +4,24 @@ package com.swvl.moviesdmb.models
  * AbstractProxyGetRepository
  */
 //FIXME : uncomment this class if we need to handle communication between different data sources 1- cash DS 2- remote DS
-/*
-abstract class AbstractProxyGetRepository<out T, U>(private val cacheRepository: Repository<T, U>,
-                                                    private val getRepository: GetRepository<U>) :
-        GetRepository<U> {
 
-    protected abstract fun convert(entity: U): T
+abstract class AbstractProxyGetRepository<out T, U>(
+    private val cacheRepository: Repository<T, U>,
+    private val getAllRepository: GetAllRepository<U>
+) :
+    GetAllRepository<U> {
 
-    override fun get(id: Int): Observable<out U> {
-        val cached = cacheRepository.get(id).cache()
-        val service by lazy {
-            getRepository.get(id).flatMap { entity: U ->
-                cacheRepository.insertOrUpdate(convert(entity))
-                        .map { _ -> entity }
-                        .onErrorReturn { _ -> entity }
-            }.cache()
+    override suspend fun getAll(pagination: Pagination): List<U> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getAllById(id: Int): List<U> {
+        val moviesFromDb = cacheRepository.getAllById(id)
+        return if (moviesFromDb.isEmpty()) {
+            val moviesFromApi = getAllRepository.getAllById(id)
+            moviesFromApi
+        } else {
+            moviesFromDb
         }
-        return cached.isEmpty.toObservable()
-                .flatMap {
-                    if (it) {
-                        service
-                    } else {
-                        cached
-                    }
-                }
-                .onErrorResumeNext { _: Throwable ->
-                    service
-                }
     }
 }
- */

@@ -36,7 +36,7 @@ class GetAllRepositoryUnitTest {
                     val dmbWebService = Mockito.mock(DmbWebService::class.java)
 
                     val movies = listOf(
-                        Movie(
+                        Movie(null,
                             "1",
                             "overview1",
                             "date1",
@@ -45,7 +45,7 @@ class GetAllRepositoryUnitTest {
                             "orgTitle1",
                             "title1", 0.1, "en"
                         ),
-                        Movie(
+                        Movie(null,
                             "2",
                             "overview2",
                             "date2",
@@ -82,7 +82,7 @@ class GetAllRepositoryUnitTest {
                 }
 
                 override fun toString(): String =
-                    MoviesRepository::class.java.simpleName
+                    MoviesRemoteRepository::class.java.simpleName
             })
         )
     }

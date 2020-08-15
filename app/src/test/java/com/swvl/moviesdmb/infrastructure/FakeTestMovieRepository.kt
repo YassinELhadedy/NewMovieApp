@@ -16,7 +16,7 @@ class FakeTestMovieRepository : GetAllRepository<Movie> {
     private var shouldReturnError = false
 
     private val observableMovies = listOf(
-        Movie(
+        Movie(null,
             "1",
             "overview1",
             "date1",
@@ -25,7 +25,7 @@ class FakeTestMovieRepository : GetAllRepository<Movie> {
             "orgTitle1",
             "title1", 0.1, "en"
         ),
-        Movie(
+        Movie(null,
             "2",
             "overview2",
             "date2",

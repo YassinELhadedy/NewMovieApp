@@ -2,9 +2,8 @@ package com.swvl.moviesdmb.ui.movielist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.swvl.moviesdmb.models.GetAllRepository
+import com.swvl.moviesdmb.models.AbstractProxyGetRepository
 import com.swvl.moviesdmb.models.Movie
-import com.swvl.moviesdmb.ui.movielist.PopularMovieListViewModel
 import com.swvl.moviesdmb.ui.movielist.adapter.MovieItemViewModel
 import com.swvl.moviesdmb.ui.utils.Resource
 import com.swvl.moviesdmb.utils.TestCoroutineRule
@@ -31,7 +30,7 @@ class PopularMovieListViewModelUnitTest {
     val testCoroutineRule = TestCoroutineRule()
 
     @Mock
-    private lateinit var movieRepository: GetAllRepository<Movie>
+    private lateinit var movieRepositoryMock: AbstractProxyGetRepository<Movie,Movie>
 
     @Mock
     private lateinit var apiUsersObserver: Observer<Resource<List<MovieItemViewModel>>>
@@ -46,14 +45,14 @@ class PopularMovieListViewModelUnitTest {
         testCoroutineRule.runBlockingTest {
             //Arrange Given
             Mockito.doReturn(emptyList<Movie>())
-                .`when`(movieRepository)
+                .`when`(movieRepositoryMock)
                 .getAllById(anyInt())
 
             //Action When
-            val viewModel = PopularMovieListViewModel(movieRepository)
+            val viewModel = PopularMovieListViewModel(movieRepositoryMock)
             viewModel.moviesItem.observeForever(apiUsersObserver)
             //Result then Assertion
-            Mockito.verify(movieRepository).getAllById(anyInt())
+            Mockito.verify(movieRepositoryMock).getAllById(anyInt())
             Mockito.verify(apiUsersObserver).onChanged(Resource.success(emptyList()))
             viewModel.moviesItem.removeObserver(apiUsersObserver)
         }
@@ -65,14 +64,14 @@ class PopularMovieListViewModelUnitTest {
             //Arrange Given
             val errorMessage = "Error Message For You"
             Mockito.doThrow(RuntimeException(errorMessage))
-                .`when`(movieRepository)
+                .`when`(movieRepositoryMock)
                 .getAllById(anyInt())
 
             //Action When
-            val viewModel = PopularMovieListViewModel(movieRepository)
+            val viewModel = PopularMovieListViewModel(movieRepositoryMock)
             viewModel.moviesItem.observeForever(apiUsersObserver)
             //Result then Assertion
-            Mockito.verify(movieRepository).getAllById(anyInt())
+            Mockito.verify(movieRepositoryMock).getAllById(anyInt())
             Mockito.verify(apiUsersObserver).onChanged(
                 Resource.error(
                     null, errorMessage

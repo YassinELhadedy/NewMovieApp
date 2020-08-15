@@ -1,18 +1,22 @@
 package com.swvl.moviesdmb.models
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
+@Entity
 @Parcelize
 data class Movie(
-    val id: String,
-    val overview: String,
-    @SerializedName("release_date") val releaseDate: String,
-    @SerializedName("poster_path") val posterPath: String,
-    @SerializedName("backdrop_path") val backdropPath: String?,
-    @SerializedName("original_title") val originalTitle: String,
-    val title: String,
-    @SerializedName("vote_average") val voteAverage: Double,
-    @SerializedName("original_language") val originalLanguage: String?
+    @PrimaryKey val localId: Int?,
+    @ColumnInfo val id: String,
+    @ColumnInfo val overview: String,
+    @ColumnInfo val releaseDate: String,
+    @ColumnInfo val posterPath: String,
+    @ColumnInfo val backdropPath: String?,
+    @ColumnInfo val originalTitle: String,
+    @ColumnInfo val title: String,
+    @ColumnInfo val voteAverage: Double,
+    @ColumnInfo val originalLanguage: String?
 ) : Parcelable

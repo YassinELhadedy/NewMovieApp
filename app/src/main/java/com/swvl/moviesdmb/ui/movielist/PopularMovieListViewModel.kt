@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.swvl.moviesdmb.models.GetAllRepository
+import com.swvl.moviesdmb.models.AbstractProxyGetRepository
 import com.swvl.moviesdmb.models.Movie
 import com.swvl.moviesdmb.ui.movielist.adapter.MovieItemViewModel
 import com.swvl.moviesdmb.ui.movielist.adapter.MovieItemViewModel.Companion.toMovieItemViewModel
@@ -12,7 +12,7 @@ import com.swvl.moviesdmb.ui.utils.Event
 import com.swvl.moviesdmb.ui.utils.Resource
 import kotlinx.coroutines.launch
 
-class PopularMovieListViewModel(private val moviesRepository: GetAllRepository<Movie>) :
+class PopularMovieListViewModel(private val movieProxyRepository: AbstractProxyGetRepository<Movie,Movie>) :
     ViewModel() {
 
     val moviesItem = MutableLiveData<Resource<List<MovieItemViewModel>>>()
@@ -33,7 +33,7 @@ class PopularMovieListViewModel(private val moviesRepository: GetAllRepository<M
         _dataLoading.value = true
         try {
             moviesItem.postValue(
-                Resource.success(data = moviesRepository.getAllById(1)
+                Resource.success(data = movieProxyRepository.getAllById(1)
                     .map { movie ->
                         _dataLoading.value = false
                         movie.toMovieItemViewModel()
