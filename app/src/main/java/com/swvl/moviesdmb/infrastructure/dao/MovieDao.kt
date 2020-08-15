@@ -12,6 +12,9 @@ interface MovieDao {
     @Query("SELECT * FROM movie")
     suspend fun getAll(): List<Movie>
 
+    @Query("SELECT * FROM movie WHERE pageId = :pageId")
+    suspend fun getAll(pageId: Long): List<Movie>
+
     @Insert
     suspend fun insertAll(users: List<Movie>)
 

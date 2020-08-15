@@ -43,7 +43,7 @@ class MovieRepositoryUnitTest {
         mainCoroutineRule.runBlockingTest {
             //Given
             val movies = listOf(
-                Movie(1,"1",
+                Movie(1,
                     "overview1",
                     "date1",
                     "poster1",
@@ -51,8 +51,7 @@ class MovieRepositoryUnitTest {
                     "orgTitle1",
                     "title1", 0.1, "en"
                 ),
-                Movie(
-                    2,"2",
+                Movie(2,
                     "overview2",
                     "date2",
                     "poster2",

@@ -16,7 +16,7 @@ class MoviesLocalRepository(private val movieDao: MovieDao) : Repository<Movie, 
         TODO("Not yet implemented")
     }
 
-    override suspend fun getAllById(id: Int): List<Movie> = movieDao.getAll()
+    override suspend fun getAllById(id: Int): List<Movie> = movieDao.getAll(id.toLong())
 
     override fun delete(id: Int) {
         TODO("Not yet implemented")

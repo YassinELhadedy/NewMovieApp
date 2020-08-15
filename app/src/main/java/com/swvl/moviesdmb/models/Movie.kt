@@ -9,8 +9,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 @Parcelize
 data class Movie(
-    @PrimaryKey val localId: Int?,
-    @ColumnInfo val id: String,
+    @PrimaryKey val id: Int,
     @ColumnInfo val overview: String,
     @ColumnInfo val releaseDate: String,
     @ColumnInfo val posterPath: String,
@@ -18,5 +17,6 @@ data class Movie(
     @ColumnInfo val originalTitle: String,
     @ColumnInfo val title: String,
     @ColumnInfo val voteAverage: Double,
-    @ColumnInfo val originalLanguage: String?
-) : Parcelable
+    @ColumnInfo val originalLanguage: String?,
+    @ColumnInfo val pageId: Long?=null
+    ) : Parcelable

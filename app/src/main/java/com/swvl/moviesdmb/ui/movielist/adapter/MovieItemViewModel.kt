@@ -10,7 +10,7 @@ data class MovieItemViewModel(
 ) {
     companion object {
         fun Movie.toMovieItemViewModel(): MovieItemViewModel = MovieItemViewModel(
-            id,
+            id.toString(),
             overview,
             releaseDate,
             posterPath,
@@ -22,8 +22,7 @@ data class MovieItemViewModel(
     }
 
     fun toMovie() = Movie(
-        null,
-        id,
+        id.toInt(),
         overview,
         releaseDate,
         posterPath,

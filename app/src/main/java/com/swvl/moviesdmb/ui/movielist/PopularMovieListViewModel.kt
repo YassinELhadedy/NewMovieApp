@@ -12,8 +12,9 @@ import com.swvl.moviesdmb.ui.utils.Event
 import com.swvl.moviesdmb.ui.utils.Resource
 import kotlinx.coroutines.launch
 
-class PopularMovieListViewModel(private val movieProxyRepository: AbstractProxyGetRepository<Movie,Movie>) :
+class PopularMovieListViewModel(private val movieProxyRepository: AbstractProxyGetRepository<Movie, Movie>) :
     ViewModel() {
+     var pageIndex = 1
 
     val moviesItem = MutableLiveData<Resource<List<MovieItemViewModel>>>()
     var items: List<MovieItemViewModel>? = null
@@ -33,7 +34,7 @@ class PopularMovieListViewModel(private val movieProxyRepository: AbstractProxyG
         _dataLoading.value = true
         try {
             moviesItem.postValue(
-                Resource.success(data = movieProxyRepository.getAllById(1)
+                Resource.success(data = movieProxyRepository.getAllById(pageIndex)
                     .map { movie ->
                         _dataLoading.value = false
                         movie.toMovieItemViewModel()

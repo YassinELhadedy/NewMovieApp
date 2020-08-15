@@ -17,7 +17,7 @@ class MovieDTO(
 
     companion object {
         fun Movie.toMovieDTO(): MovieDTO = MovieDTO(
-            id,
+            id.toString(),
             overview,
             releaseDate,
             posterPath,
@@ -29,7 +29,7 @@ class MovieDTO(
     }
 
     fun toMovie(): Movie = Movie(
-        null, id,
+        id.toInt(),
         overview,
         releaseDate,
         posterPath,

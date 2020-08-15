@@ -44,7 +44,7 @@ class MovieDetailFragment : Fragment(), TrailerAdapter.OnYouTubeLinkClickListene
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupUI(movie)
-        setupObservers(movie.id)
+        setupObservers(movie.id.toString())
         actions()
     }
 

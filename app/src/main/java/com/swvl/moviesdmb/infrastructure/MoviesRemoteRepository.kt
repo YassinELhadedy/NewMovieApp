@@ -15,7 +15,9 @@ class MoviesRemoteRepository(
     }
 
     override suspend fun getAllById(id: Int): List<Movie> = wrapEspressoIdlingResource {
-        apiService.popularMovies(1).results.map { it.toMovie() }.also { movies: List<Movie> ->
+        apiService.popularMovies(id).results.map {
+            it.toMovie().copy(pageId = id.toLong())
+        }.also { movies: List<Movie> ->
             moviesLocalRepository.insertAll(
                 movies
             )

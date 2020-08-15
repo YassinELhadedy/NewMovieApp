@@ -1,7 +1,7 @@
 package com.swvl.moviesdmb.infrastructure
 
-import com.swvl.moviesdmb.utils.MainCoroutineRule
 import com.swvl.moviesdmb.models.Movie
+import com.swvl.moviesdmb.utils.MainCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -36,8 +36,8 @@ class GetAllRepositoryUnitTest {
                     val dmbWebService = Mockito.mock(DmbWebService::class.java)
 
                     val movies = listOf(
-                        Movie(null,
-                            "1",
+                        Movie(
+                            1,
                             "overview1",
                             "date1",
                             "poster1",
@@ -45,8 +45,7 @@ class GetAllRepositoryUnitTest {
                             "orgTitle1",
                             "title1", 0.1, "en"
                         ),
-                        Movie(null,
-                            "2",
+                        Movie(2,
                             "overview2",
                             "date2",
                             "poster2",
