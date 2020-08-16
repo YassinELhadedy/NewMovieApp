@@ -3,8 +3,7 @@ package com.swvl.moviesdmb.infrastructure
 import com.swvl.moviesdmb.infrastructure.dto.CastResponses
 import com.swvl.moviesdmb.infrastructure.dto.MovieResponse
 import com.swvl.moviesdmb.infrastructure.dto.ReviewResponse
-import com.swvl.moviesdmb.infrastructure.dto.TraliersResponse
-import retrofit2.Call
+import com.swvl.moviesdmb.infrastructure.dto.TrailersResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -27,7 +26,7 @@ interface DmbWebService {
         @Path("id") id: Int): CastResponses
 
     @GET("3/movie/{movieId}/videos")
-    suspend fun trailers(@Path("movieId") movieId: String): TraliersResponse
+    suspend fun trailers(@Path("movieId") movieId: String): TrailersResponse
 
     @GET("3/movie/{movieId}/reviews")
     suspend fun reviews(@Path("movieId") movieId: String): ReviewResponse
