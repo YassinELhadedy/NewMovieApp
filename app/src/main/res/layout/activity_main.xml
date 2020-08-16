@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity"
     app:contentScrim="@color/blue"
-    android:background="@color/blue">
+    android:background="@drawable/grad_bg">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
