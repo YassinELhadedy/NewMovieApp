@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,10 +31,17 @@ class PagingMovieListFragment : Fragment() {
         viewDataBinding = FragmentPagingMovieListBinding.inflate(inflater, container, false)
 
         initAdapter()
-        search()
+        getMoreMovies()
         setupNavigation()
+        observeData()
 
         return viewDataBinding.root
+    }
+
+    private fun observeData() {
+        popularMoreMovieListViewModel.dataRefresh.observe(requireActivity(), Observer {
+            adapter.refresh()
+        })
     }
 
     private fun initAdapter() {
@@ -42,7 +50,7 @@ class PagingMovieListFragment : Fragment() {
         viewDataBinding.moviesList.adapter = adapter
     }
 
-    private fun search() {
+    private fun getMoreMovies() {
         // Make sure we cancel the previous job before creating a new one
         lifecycleScope.launch {
             popularMoreMovieListViewModel.getPopularMovieList().collectLatest {

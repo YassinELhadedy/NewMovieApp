@@ -14,14 +14,14 @@ import kotlinx.coroutines.flow.Flow
 class PopularMoreMovieListViewModel(private val moviePaginateeRepository: MoviePaginateeRepository) :
     ViewModel() {
 
-     val _dataLoading = MutableLiveData<Boolean>()
+    val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
     private val _openMovieEvent = MutableLiveData<Event<Movie>>()
     val openMovieEvent: LiveData<Event<Movie>> = _openMovieEvent
 
-
     var items: PagingData<Movie>? = null
+    val dataRefresh = MutableLiveData<Boolean>()
 
 
     fun getPopularMovieList(): Flow<PagingData<Movie>> {
@@ -37,6 +37,6 @@ class PopularMoreMovieListViewModel(private val moviePaginateeRepository: MovieP
     }
 
     fun refresh() {
-        getPopularMovieList()
+        dataRefresh.postValue(true)
     }
 }
