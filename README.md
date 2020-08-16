@@ -32,7 +32,7 @@ Inrastruture -> Domain -> Presentation
 1- add mapper layer between (Entity Domain Model to Prisist DB Model)
 2- add relational DB 
 3- external web services for Box-Office Movies
-4- validation factory for Infrastructure exception. 
+4- validation factory for Infrastructure exception like https://github.com/YassinELhadedy/Build-Android-App-Sample1-CompleteCycle/blob/master/app/src/main/java/com/transporter/streetglide/infrastructure/InfrastructureException.kt . 
 
 
 # Domain ->
