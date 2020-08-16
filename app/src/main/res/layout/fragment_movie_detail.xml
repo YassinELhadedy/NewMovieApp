@@ -243,13 +243,13 @@
                                 android:layout_marginStart="@dimen/five_dp"
                                 android:layout_marginLeft="@dimen/five_dp"
                                 android:layout_marginTop="@dimen/three_dp"
-                                android:drawableStart="@drawable/ic_star_rating"
-                                android:drawableLeft="@drawable/ic_star_rating"
                                 android:text="@{String.valueOf(item.voteAverage)}"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/fifteen_dp"
                                 android:textStyle="bold"
-                                tools:text="@string/rating" />
+                                tools:text="@string/rating"
+                                app:drawableStartCompat="@drawable/ic_star_rating"
+                                app:drawableLeftCompat="@drawable/ic_star_rating" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -288,12 +288,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:drawableStart="@drawable/ic_movie_filter_black_24dp"
-                        android:drawableLeft="@drawable/ic_movie_filter_black_24dp"
                         android:text="@string/overview"
                         android:textColor="@color/white"
                         android:textSize="@dimen/tv_overview"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:drawableStartCompat="@drawable/ic_movie_filter_black_24dp"
+                        app:drawableLeftCompat="@drawable/ic_movie_filter_black_24dp" />
 
                     <com.borjabravo.readmoretextview.ReadMoreTextView
                         android:id="@+id/overview"
@@ -320,12 +320,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/five_dp"
-                        android:drawableStart="@drawable/ic_casts"
-                        android:drawableLeft="@drawable/ic_casts"
                         android:text="@string/casts"
                         android:textColor="@color/white"
                         android:textSize="@dimen/t_three_dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:drawableStartCompat="@drawable/ic_casts"
+                        app:drawableLeftCompat="@drawable/ic_casts" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_casts"
@@ -346,12 +346,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/five_dp"
-                        android:drawableStart="@drawable/ic_reviews"
-                        android:drawableLeft="@drawable/ic_reviews"
                         android:text="@string/reviews"
                         android:textColor="@color/white"
                         android:textSize="@dimen/t_three_dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:drawableStartCompat="@drawable/ic_reviews"
+                        app:drawableLeftCompat="@drawable/ic_reviews" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_reviews"
@@ -386,12 +386,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/five_dp"
-                        android:drawableStart="@drawable/ic_trailer"
-                        android:drawableLeft="@drawable/ic_trailer"
                         android:text="@string/trailer"
                         android:textColor="@color/white"
                         android:textSize="@dimen/t_three_dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:drawableStartCompat="@drawable/ic_trailer"
+                        app:drawableLeftCompat="@drawable/ic_trailer" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_trailers"

@@ -18,7 +18,6 @@ import org.koin.android.ext.android.inject
 
 
 class PagingMovieListFragment : Fragment() {
-
     private val popularMoreMovieListViewModel: PopularMoreMovieListViewModel by inject()
     private lateinit var adapter: PagingMovieAdapter
     private lateinit var viewDataBinding: FragmentPagingMovieListBinding
@@ -29,7 +28,6 @@ class PagingMovieListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         viewDataBinding = FragmentPagingMovieListBinding.inflate(inflater, container, false)
-
 
         initAdapter()
         search()
@@ -48,7 +46,6 @@ class PagingMovieListFragment : Fragment() {
         // Make sure we cancel the previous job before creating a new one
         lifecycleScope.launch {
             popularMoreMovieListViewModel.getPopularMovieList().collectLatest {
-//                adapter.submitData(it)
                 popularMoreMovieListViewModel.items = it
                 viewDataBinding.viewmodel = popularMoreMovieListViewModel
                 popularMoreMovieListViewModel._dataLoading.value = false

@@ -43,15 +43,14 @@ class PopularMovieListFragmentTest {
         // WHEN - Click on the first list item
         Espresso.onView(withId(R.id.movies_list))
             .perform(
-                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,click())
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())
             )
-
 
         // THEN - Verify that we navigate to the detail screen
         Mockito.verify(navController).navigate(
             PopularMovieListFragmentDirections.actionPopularMovieListFragmentToMovieDetailFragment(
-                Movie(1,
-                    "1",
+                Movie(
+                    1,
                     "overview1",
                     "date1",
                     "poster1",

@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.swvl.moviesdmb.ui.moviepaginglist.PopularMoreMovieListViewModel" />
+            type="com.swvl.moviesdmb.ui.movielist.PopularMovieListViewModel" />
 
         <variable
             name="item"
-            type="com.swvl.moviesdmb.models.Movie" />
+            type="com.swvl.moviesdmb.ui.movielist.adapter.MovieItemViewModel" />
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -28,7 +29,7 @@
             android:paddingTop="@dimen/card_margin"
             app:cardCornerRadius="@dimen/five_dp"
             app:cardElevation="@dimen/five_dp"
-            android:onClick="@{() -> viewModel.openMovie(item)}">
+            android:onClick="@{() -> viewModel.openMovie(item.toMovie())}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -89,7 +90,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
                     android:paddingBottom="@dimen/user_rating_padding_bottom"
-                    android:text="@{String.valueOf(item.voteAverage)}"
+                    android:text="@{item.voteAverage}"
                     android:textSize="@dimen/user_rating"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
