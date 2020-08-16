@@ -8,15 +8,19 @@ Retrofit - Kotlin Flow - Corotuines - Koin Di - Mockito - parameterized unit tes
 Read more text view library.
 
 # Steps To Run 
+
 1- Open https://www.themoviedb.org/documentation/api and create a Key
 2- Open Gradle Scripts -> Local.Properties -> tmdb_api_key= INSERT_KEY_HERE
 3- Run The Project
 
+
 # Architeture-Design
+
 1- According to Domain-Deiven-Design http://www.zankavtaskin.com/2014/12/applied-domain-driven-design-ddd-part-0.html
-2- ![Android-Architeture-Component](https://developer.android.com/jetpack/guide)
+2- ![Android-Architeture-Component](https://drive.google.com/file/d/1uPCac7XxlLTv_UkHlqXmR5E6AGhZIz5d/view?usp=sharing)
 
 Inrastruture -> Domain -> Presentation
+
 
 # Infrastructure ->
 
@@ -28,6 +32,7 @@ Later:
 1- add mapper layer between (Entity Domain Model to Prisist DB Model)
 2- add relational DB 
 3- external web services for Box-Office Movies
+
 
 # Domain ->
 
@@ -50,6 +55,7 @@ Don't create too many Domain Services, most of the logic should reside in the do
 Later: 
 1- add more domain services.
 2- add a relation between Entity and VO.
+
 
 
 # Prsentation -> 
