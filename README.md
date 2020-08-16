@@ -32,6 +32,7 @@ Later:
 1- add mapper layer between (Entity Domain Model to Prisist DB Model)
 2- add relational DB 
 3- external web services for Box-Office Movies
+4- validation factory for Infrastructure exception. 
 
 
 # Domain ->
@@ -55,7 +56,38 @@ Don't create too many Domain Services, most of the logic should reside in the do
 Later: 
 1- add more domain services.
 2- add a relation between Entity and VO.
+3- validation factory for Domain exception.
 
 
 
 # Prsentation -> 
+
+Currently:
+A- Fragment
+
+1-PagingMovieListFragment (show list of movies with supporting paging library and kotlin flow).
+2-PopularMovieListFragment (show list of movies without supporting paging library but support Live Data).
+3-MovieDetailFragment (show detail of movie and trailers and reviews and casts).
+
+
+B- View Models + Data Bindng (depend only Infrastructure (Abstraction Repo) or Domain Service) Apply DIP Solid Principle.
+
+
+C- Dependency injection (Koin Modules)
+
+
+D- Adapter 
+
+1-(reycler view with Data binding)
+2-(PagingDataAdapter to handle paingData  Paging Library)
+
+
+
+Later:
+
+
+1- validation factory that map error and exceptions to Business Messages.
+2- Utils for Network State and permission
+3- Base Adapter with Data binding
+4- Base Fragment to reduce setup code for each fragment and hanle life cycle and navigation.
+
