@@ -37,13 +37,13 @@ Inrastruture -> Domain -> Presentation
 
 # Domain ->
 
-##### Currently:
+## Currently:
 
-A- Models 
+##### A- Models 
 1- Entity and Value Objects  (Movies, Trailer - Reviews - Casts) and we need to add a relation between them.
 2- Abstraction Repos Agreed with interface segregation  Solid Principle.
 
-B-Service 
+##### B-Service 
 1- According to DDD, we refer to domain services that orchestrate between entity models and doing some logic independent for UI Layer.(DetailMovieService)
 Note:
 Domain Service allows you to capture logic that doesn't belong in the Domain Entity.
@@ -53,7 +53,7 @@ Don't create too many Domain Services, most of the logic should reside in the do
 
 2-all logic doesn't exist only in domain services but we need balance with application services
 
-##### Later: 
+## Later: 
 1- add more domain services.
 2- add a relation between Entity and VO.
 3- validation factory for Domain exception.
@@ -62,28 +62,30 @@ Don't create too many Domain Services, most of the logic should reside in the do
 
 # Prsentation -> 
 
-Currently:
-A- Fragment
+## Currently:
+
+
+##### A- Fragment
 
 1-PagingMovieListFragment (show list of movies with supporting paging library and kotlin flow).
 2-PopularMovieListFragment (show list of movies without supporting paging library but support Live Data).
 3-MovieDetailFragment (show detail of movie and trailers and reviews and casts).
 
 
-B- View Models + Data Bindng (depend only Infrastructure (Abstraction Repo) or Domain Service) Apply DIP Solid Principle.
+##### B- View Models + Data Bindng (depend only Infrastructure (Abstraction Repo) or Domain Service) Apply DIP Solid Principle.
 
 
-C- Dependency injection (Koin Modules)
+##### C- Dependency injection (Koin Modules)
 
 
-D- Adapter 
+##### D- Adapter 
 
 1-(reycler view with Data binding)
 2-(PagingDataAdapter to handle paingData  Paging Library)
 
 
 
-Later:
+## Later:
 
 
 1- validation factory that map error and exceptions to Business Messages.
