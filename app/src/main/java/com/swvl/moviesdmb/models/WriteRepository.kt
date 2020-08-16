@@ -15,13 +15,13 @@ interface WriteRepository<in T, out U> : PostRepository<T, U>, PostAllRepository
      * be enhanced in subclasses
      */
 //    @ExperimentalCoroutinesApi
-//    fun insertOrUpdate(entity: T): Flow<U> =
+//    suspend fun insertOrUpdate(entity: T): Flow<U> =
 //        insert(entity)
 //            .map { it }
-////            .onEmpty {
-////                (update(entity).map { _ ->
-////                    @Suppress("UNCHECKED_CAST")
-////                    entity as U
-////                })
-////            }
+//            .onEmpty {
+//                (update(entity).map { _ ->
+//                    @Suppress("UNCHECKED_CAST")
+//                    entity as U
+//                })
+//            }
 }

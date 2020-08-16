@@ -18,5 +18,5 @@ data class Movie(
     @ColumnInfo val title: String,
     @ColumnInfo val voteAverage: Double,
     @ColumnInfo val originalLanguage: String?,
-    @ColumnInfo val pageId: Long?=null
-    ) : Parcelable
+    @ColumnInfo val pageId: Long? = null
+) : Parcelable

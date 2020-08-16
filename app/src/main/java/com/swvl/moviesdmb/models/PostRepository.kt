@@ -1,7 +1,5 @@
 package com.swvl.moviesdmb.models
 
-import kotlinx.coroutines.flow.Flow
-
 /**
  * PostRepository
  */

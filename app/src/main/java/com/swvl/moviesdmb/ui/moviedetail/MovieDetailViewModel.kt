@@ -10,15 +10,14 @@ import kotlinx.coroutines.Dispatchers
 class MovieDetailViewModel(
     private val detailMovieService: DetailMovieService
 ) : ViewModel() {
-    private lateinit var item: DetailItemViewModel
-
 
     fun getMovieDetail(movieId: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
             emit(
                 Resource.success(
-                    data = detailMovieService.getDetailMovie(movieId)
+                    data = DetailItemViewModel(detailMovieService.getDetailMovie(movieId).first,detailMovieService.getDetailMovie(movieId).second,
+                        detailMovieService.getDetailMovie(movieId).third)
                 )
             )
         } catch (exception: Exception) {
