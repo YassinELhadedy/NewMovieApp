@@ -14,4 +14,4 @@ Read more text view library.
 
 # Architeture-Design
 1- According to Domain-Deiven-Design http://www.zankavtaskin.com/2014/12/applied-domain-driven-design-ddd-part-0.html
-2- ![Android-Architeture-Component] (https://drive.google.com/file/d/1uPCac7XxlLTv_UkHlqXmR5E6AGhZIz5d/view?usp=sharing)
+2-  ![Android-Architeture-Component](https://drive.google.com/file/d/1uPCac7XxlLTv_UkHlqXmR5E6AGhZIz5d/view?usp=sharing)
