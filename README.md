@@ -24,11 +24,11 @@ Inrastruture -> Domain -> Presentation
 
 # Infrastructure ->
 
-###### Currently:
+##### Currently:
 1-DTO (transfer from Backend Modle into our Entity Domain Model) doesn't contain any logic
 2-Implementation of Repository Patterns (Remote Repo (MoviesRemoteRepository) - Cash Repo (MoviesLocalRepository) )  & handle communication between 2 Repos (MovieProxyRepository) 
 
-###### Later:
+##### Later:
 1- add mapper layer between (Entity Domain Model to Prisist DB Model)
 2- add relational DB 
 3- external web services for Box-Office Movies
