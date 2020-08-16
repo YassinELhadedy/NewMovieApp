@@ -24,11 +24,11 @@ Inrastruture -> Domain -> Presentation
 
 # Infrastructure ->
 
-##### Currently:
+## Currently:
 1-DTO (transfer from Backend Modle into our Entity Domain Model) doesn't contain any logic
 2-Implementation of Repository Patterns (Remote Repo (MoviesRemoteRepository) - Cash Repo (MoviesLocalRepository) )  & handle communication between 2 Repos (MovieProxyRepository) 
 
-##### Later:
+## Later:
 1- add mapper layer between (Entity Domain Model to Prisist DB Model)
 2- add relational DB 
 3- external web services for Box-Office Movies
@@ -37,7 +37,7 @@ Inrastruture -> Domain -> Presentation
 
 # Domain ->
 
-Currently:
+##### Currently:
 
 A- Models 
 1- Entity and Value Objects  (Movies, Trailer - Reviews - Casts) and we need to add a relation between them.
@@ -53,7 +53,7 @@ Don't create too many Domain Services, most of the logic should reside in the do
 
 2-all logic doesn't exist only in domain services but we need balance with application services
 
-Later: 
+##### Later: 
 1- add more domain services.
 2- add a relation between Entity and VO.
 3- validation factory for Domain exception.
