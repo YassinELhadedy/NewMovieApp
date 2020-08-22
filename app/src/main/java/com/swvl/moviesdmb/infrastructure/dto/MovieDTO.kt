@@ -6,7 +6,7 @@ import com.swvl.moviesdmb.models.Movie
 class MovieDTO(
     val id: String,
     val overview: String,
-    @SerializedName("release_date") val releaseDate: String,
+    @SerializedName("release_date") val releaseDate: String?,
     @SerializedName("poster_path") val posterPath: String?,
     @SerializedName("backdrop_path") val backdropPath: String?,
     @SerializedName("original_title") val originalTitle: String,

@@ -8,7 +8,7 @@
     app:contentScrim="@color/blue"
     android:background="@drawable/grad_bg">
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"

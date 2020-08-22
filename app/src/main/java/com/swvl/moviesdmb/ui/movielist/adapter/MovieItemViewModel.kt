@@ -3,7 +3,7 @@ package com.swvl.moviesdmb.ui.movielist.adapter
 import com.swvl.moviesdmb.models.Movie
 
 data class MovieItemViewModel(
-    val id: String, val overview: String, val releaseDate: String,
+    val id: String, val overview: String, val releaseDate: String?,
     val posterPath: String?, val backdropPath: String?,
     val originalTitle: String, val title: String,
     val voteAverage: String

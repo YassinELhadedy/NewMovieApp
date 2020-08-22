@@ -50,28 +50,6 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/no_tasks_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:id="@+id/no_tasks_icon"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@null" />
-
-                    <TextView
-                        android:id="@+id/no_tasks_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="8dp" />
-                </LinearLayout>
             </RelativeLayout>
         </com.swvl.moviesdmb.ui.utils.ScrollChildSwipeRefreshLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
