@@ -49,7 +49,7 @@
             android:layout_weight="3"
             tools:text="Today DD/MM/yyyy"
             android:visibility="@{item.keyDate == null ? View.GONE : View.VISIBLE}"
-            app:itemTextHeaderDate="@{item.year}"
+            android:text="@{String.valueOf(item.year)}"
             android:textAlignment="center"
             android:textColor="@color/uclagold"
             android:textSize="12sp"

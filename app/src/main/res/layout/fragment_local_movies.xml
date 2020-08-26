@@ -35,6 +35,7 @@
             tools:listitem="@layout/item_local_movie" />
 
         <ProgressBar
+            android:id="@+id/progress_dialog"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"

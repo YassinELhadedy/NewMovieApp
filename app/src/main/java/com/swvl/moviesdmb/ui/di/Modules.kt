@@ -23,6 +23,7 @@ val applicationModule = module {
     single { setupRoomDao(androidContext()) }
     single { OkHttpClientProvider().provideOkHttpClient }
     single { RetrofitFactory(get()).apiService }
+    single { setupInputStream(androidContext()) }
 
     // Repositories
     single { ReviewsRepository(get()) }
@@ -32,7 +33,7 @@ val applicationModule = module {
     single { MoviesLocalRepository(get()) }
     single { MovieProxyRepository(get(), get()) }
     single { MoviePaginateeRepository(get()) }
-    single { LocalMovieRepository(setupInputStream(androidContext())) }
+    single { LocalMovieRepository(get()) }
 
     // Service
     single { DetailMovieService(get(), get(), get()) }

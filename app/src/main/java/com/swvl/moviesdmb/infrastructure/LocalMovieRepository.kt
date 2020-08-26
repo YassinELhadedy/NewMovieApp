@@ -28,7 +28,7 @@ class LocalMovieRepository(
 
 
     private fun fetchLocalMovie(): LocalMovieResult {
-        val movies = listOf<LocalMovie>()
+        val movies = mutableListOf<LocalMovie>()
         try {
             val jsonObject = JSONObject(parseJSONData())
             val jsonArray = jsonObject.getJSONArray("movies")
@@ -40,7 +40,7 @@ class LocalMovieRepository(
                 val genres = parseListOfString(item.getJSONArray("genres"))
                 val rating = item.getInt("rating")
 
-                movies.plus(LocalMovie(title, year, cast, genres, rating))
+                movies.add(LocalMovie(title, year, cast, genres, rating))
             }
 
         } catch (ex: JSONException) {
@@ -50,10 +50,10 @@ class LocalMovieRepository(
     }
 
     private fun parseListOfString(list: JSONArray): List<String> {
-        val newList = listOf<String>()
+        val newList = mutableListOf<String>()
         for (i in 0 until list.length()) {
             val item = list.getString(i)
-            newList.plus(item)
+            newList.add(item)
         }
         return newList
     }

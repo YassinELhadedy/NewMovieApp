@@ -85,7 +85,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
                     android:paddingBottom="@dimen/user_rating_padding_bottom"
-                    android:text="@{item.rating}"
+                    android:text="@{String.valueOf(item.rating)}"
                     android:textSize="@dimen/user_rating"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
