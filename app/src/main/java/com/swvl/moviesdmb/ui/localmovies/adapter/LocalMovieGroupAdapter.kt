@@ -79,8 +79,13 @@ class LocalMovieGroupAdapter(
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                moviesTilte.clear()
-                moviesTilte.addAll(results?.values as Collection<String>)
+                val cashMovies = movies.filter {
+                    (results?.values as Collection<String>).contains(
+                        it.title
+                    )
+                }
+                movies.clear()
+                movies.addAll(cashMovies)
                 notifyDataSetChanged()
             }
         }
