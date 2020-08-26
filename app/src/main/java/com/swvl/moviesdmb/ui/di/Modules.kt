@@ -4,6 +4,7 @@ import android.content.Context
 import com.swvl.moviesdmb.infrastructure.*
 import com.swvl.moviesdmb.infrastructure.dao.MovieDao
 import com.swvl.moviesdmb.models.service.DetailMovieService
+import com.swvl.moviesdmb.ui.localmovies.LocalMovieListViewModel
 import com.swvl.moviesdmb.ui.moviedetail.MovieDetailViewModel
 import com.swvl.moviesdmb.ui.movielist.PopularMovieListViewModel
 import com.swvl.moviesdmb.ui.moviepaginglist.PopularMoreMovieListViewModel
@@ -40,9 +41,6 @@ val applicationModule = module {
     // View Models
     viewModel { PopularMovieListViewModel(MovieProxyRepository(get(), get())) }
     viewModel { MovieDetailViewModel(get()) }
-    viewModel {
-        PopularMoreMovieListViewModel(
-            get()
-        )
-    }
+    viewModel { PopularMoreMovieListViewModel(get()) }
+    viewModel { LocalMovieListViewModel(LocalMovieRepository(get())) }
 }
