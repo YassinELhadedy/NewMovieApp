@@ -20,7 +20,10 @@ class LocalMovieRepository(
 
     override suspend fun getAllById(id: Int): List<LocalMovie> = fetchLocalMovie().movies
         .groupBy { movie -> movie.year }
-        .flatMap { map -> map.value }
+        .flatMap { map ->
+            map.value.first().keyDate = map.key.toString()
+            map.value
+        }
         .sortedWith(compareBy({ it.year }, { it.rating }))
 
 

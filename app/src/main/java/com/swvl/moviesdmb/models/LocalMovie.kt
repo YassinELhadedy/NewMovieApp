@@ -5,5 +5,6 @@ data class LocalMovie(
     val year: Int,
     val cast: List<String>,
     val genres: List<String>,
-    val rating: Int
+    val rating: Int,
+    var keyDate: String? = null
 )

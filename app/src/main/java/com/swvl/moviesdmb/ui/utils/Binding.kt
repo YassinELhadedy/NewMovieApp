@@ -13,6 +13,8 @@ import com.swvl.moviesdmb.BuildConfig
 import com.swvl.moviesdmb.R
 import com.swvl.moviesdmb.models.Movie
 import com.swvl.moviesdmb.models.Trailer
+import com.swvl.moviesdmb.ui.localmovies.adapter.LocalMovieGroupAdapter
+import com.swvl.moviesdmb.ui.localmovies.adapter.LocalMovieItemViewModel
 import com.swvl.moviesdmb.ui.moviedetail.MovieDetailFragment
 import com.swvl.moviesdmb.ui.moviedetail.adapter.TrailerAdapter
 import com.swvl.moviesdmb.ui.movielist.adapter.MovieAdapter
@@ -99,6 +101,17 @@ fun setPagingItems(listView: RecyclerView, items: PagingData<Movie>?) {
             (listView.adapter as PagingMovieAdapter).apply {
                 this.submitData(items)
             }
+        }
+    }
+}
+
+@BindingAdapter("app:localItems")
+fun setLocalItems(listView: RecyclerView, items: List<LocalMovieItemViewModel>?) {
+    items?.let {
+        listView.visibility = View.VISIBLE
+        (listView.adapter as LocalMovieGroupAdapter).apply {
+            addMovies(items)
+            notifyDataSetChanged()
         }
     }
 }

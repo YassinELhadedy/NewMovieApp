@@ -1,4 +1,4 @@
-package com.swvl.moviesdmb.ui.localmovies
+package com.swvl.moviesdmb.ui.localmovies.adapter
 
 import com.swvl.moviesdmb.models.LocalMovie
 
@@ -7,12 +7,14 @@ data class LocalMovieItemViewModel(
     val year: Int,
     val cast: List<String>,
     val genres: List<String>,
-    val rating: Int
-){
+    val rating: Int,
+    var keyDate: String? = null
+) {
     companion object {
-        fun LocalMovie.toLocalMovieItemViewModel() = LocalMovieItemViewModel(
-           title, year, cast, genres, rating
-        )
+        fun LocalMovie.toLocalMovieItemViewModel() =
+            LocalMovieItemViewModel(
+                title, year, cast, genres, rating,keyDate
+            )
     }
 
     fun toLocalMovie() = LocalMovie(
