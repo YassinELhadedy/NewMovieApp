@@ -88,7 +88,7 @@ class LocalMovieGroupAdapter(
                             )
                 }
                 movies.clear()
-                if (x.isEmpty()) {
+                if (constraint.toString().isEmpty()) {
                     movies.addAll(cashMovies)
                 } else {
                     movies.addAll(x)
