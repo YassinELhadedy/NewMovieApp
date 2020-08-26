@@ -16,7 +16,9 @@ class LocalMovieGroupAdapter(
     private val movies: MutableList<LocalMovieItemViewModel>
 ) : RecyclerView.Adapter<LocalMovieGroupAdapter.LocalMovieViewHolder>(), Filterable {
 
-    val moviesTilte = mutableListOf<String>()
+    val cashMovies: List<LocalMovieItemViewModel> by lazy {
+        movies.toList()
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): LocalMovieViewHolder =
         LocalMovieViewHolder(
@@ -47,7 +49,7 @@ class LocalMovieGroupAdapter(
         this.movies.apply {
             clear()
             addAll(movies)
-            moviesTilte.addAll(movies.map { it.title })
+            cashMovies
         }
     }
 
@@ -60,13 +62,13 @@ class LocalMovieGroupAdapter(
 
                 val filterList = mutableListOf<String>()
                 if (constraint.toString().isEmpty()) {
-                    filterList.addAll(moviesTilte)
+                    filterList.addAll(movies.map { it.title })
                 } else {
-                    for (movie in moviesTilte) {
-                        if (movie.toLowerCase()
+                    for (movie in movies) {
+                        if (movie.title.toLowerCase()
                                 .contains(constraint.toString().toLowerCase())
                         ) {
-                            filterList.add(movie)
+                            filterList.add(movie.title)
                         }
                     }
                 }
@@ -79,13 +81,18 @@ class LocalMovieGroupAdapter(
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                val cashMovies = movies.filter {
-                    (results?.values as Collection<String>).contains(
-                        it.title
-                    )
+                val x = cashMovies.filter {
+                    (constraint.toString() != "") &&
+                            (results?.values as Collection<String>).contains(
+                                it.title
+                            )
                 }
                 movies.clear()
-                movies.addAll(cashMovies)
+                if (x.isEmpty()) {
+                    movies.addAll(cashMovies)
+                } else {
+                    movies.addAll(x)
+                }
                 notifyDataSetChanged()
             }
         }
