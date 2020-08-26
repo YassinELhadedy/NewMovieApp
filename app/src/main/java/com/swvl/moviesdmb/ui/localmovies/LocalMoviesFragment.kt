@@ -1,13 +1,13 @@
 package com.swvl.moviesdmb.ui.localmovies
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mindorks.retrofit.coroutines.utils.Status
+import com.swvl.moviesdmb.R
 import com.swvl.moviesdmb.databinding.FragmentLocalMoviesBinding
 import com.swvl.moviesdmb.ui.localmovies.adapter.LocalMovieGroupAdapter
 import org.koin.android.ext.android.inject
@@ -17,6 +17,10 @@ class LocalMoviesFragment : Fragment() {
     private val localMovieListViewModel: LocalMovieListViewModel by inject()
     private lateinit var viewDataBinding: FragmentLocalMoviesBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +32,24 @@ class LocalMoviesFragment : Fragment() {
         setupObservers()
 
         return viewDataBinding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        requireActivity().menuInflater.inflate(R.menu.main_menu,menu)
+        val item = menu.findItem(R.id.action_search)
+        val searchView = item.actionView as SearchView
+        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+               return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+        })
+
+        return super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun initAdapter() {

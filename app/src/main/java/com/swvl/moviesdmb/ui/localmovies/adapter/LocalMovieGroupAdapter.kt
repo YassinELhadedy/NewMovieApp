@@ -4,16 +4,19 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.swvl.moviesdmb.R
 import com.swvl.moviesdmb.databinding.ItemLocalMovieBinding
-import com.swvl.moviesdmb.databinding.LocalMovieCardsBinding
 
 class LocalMovieGroupAdapter(
     private val context: Context,
     private val movies: MutableList<LocalMovieItemViewModel>
-) : RecyclerView.Adapter<LocalMovieGroupAdapter.LocalMovieViewHolder>() {
+) : RecyclerView.Adapter<LocalMovieGroupAdapter.LocalMovieViewHolder>(), Filterable {
+
+    val moviesTilte = mutableListOf<String>()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): LocalMovieViewHolder =
         LocalMovieViewHolder(
@@ -44,9 +47,42 @@ class LocalMovieGroupAdapter(
         this.movies.apply {
             clear()
             addAll(movies)
+            moviesTilte.addAll(movies.map { it.title })
         }
     }
 
     inner class LocalMovieViewHolder(val itemLocalMovieBinding: ItemLocalMovieBinding) :
         RecyclerView.ViewHolder(itemLocalMovieBinding.root)
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+
+                val filterList = mutableListOf<String>()
+                if (constraint.toString().isEmpty()) {
+                    filterList.addAll(moviesTilte)
+                } else {
+                    for (movie in moviesTilte) {
+                        if (movie.toLowerCase()
+                                .contains(constraint.toString().toLowerCase())
+                        ) {
+                            filterList.add(movie)
+                        }
+                    }
+                }
+
+                val filterResult = FilterResults()
+                filterResult.values = filterList
+
+                return filterResult
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                moviesTilte.clear()
+                moviesTilte.addAll(results?.values as Collection<String>)
+                notifyDataSetChanged()
+            }
+        }
+    }
 }

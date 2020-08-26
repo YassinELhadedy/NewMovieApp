@@ -16,5 +16,6 @@
     <string name="noReviews">There is no reviews for this movie.</string>
     <dimen name="tv_overview">23sp</dimen>
     <string name="animeDescription">Anime Description</string>
+    <string name="search">Search</string>
 
 </resources>

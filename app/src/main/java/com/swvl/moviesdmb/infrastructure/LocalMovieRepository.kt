@@ -39,7 +39,6 @@ class LocalMovieRepository(
                 val cast = parseListOfString(item.getJSONArray("cast"))
                 val genres = parseListOfString(item.getJSONArray("genres"))
                 val rating = item.getInt("rating")
-
                 movies.add(LocalMovie(title, year, cast, genres, rating))
             }
 
