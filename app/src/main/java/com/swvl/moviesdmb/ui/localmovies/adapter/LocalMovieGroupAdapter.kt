@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.swvl.moviesdmb.R
 import com.swvl.moviesdmb.databinding.ItemLocalMovieBinding
+import java.util.*
 
 class LocalMovieGroupAdapter(
     private val context: Context,
@@ -53,7 +54,7 @@ class LocalMovieGroupAdapter(
         }
     }
 
-    inner class LocalMovieViewHolder(val itemLocalMovieBinding: ItemLocalMovieBinding) :
+    class LocalMovieViewHolder(val itemLocalMovieBinding: ItemLocalMovieBinding) :
         RecyclerView.ViewHolder(itemLocalMovieBinding.root)
 
     override fun getFilter(): Filter {
@@ -64,9 +65,9 @@ class LocalMovieGroupAdapter(
                 if (constraint.toString().isEmpty()) {
                     filterList.addAll(movies.map { it.title })
                 } else {
-                    for (movie in movies) {
-                        if (movie.title.toLowerCase()
-                                .contains(constraint.toString().toLowerCase())
+                    for (movie in cashMovies) {
+                        if (movie.title.toLowerCase(Locale.getDefault())
+                                .contains(constraint.toString().toLowerCase(Locale.getDefault()))
                         ) {
                             filterList.add(movie.title)
                         }
@@ -81,20 +82,27 @@ class LocalMovieGroupAdapter(
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                val x = cashMovies.filter {
-                    (constraint.toString() != "") &&
-                            (results?.values as Collection<String>).contains(
-                                it.title
-                            )
-                }
+                val listAfterFilter =
+                    filterFromList(cashMovies, (results?.values as Collection<String>))
                 movies.clear()
                 if (constraint.toString().isEmpty()) {
                     movies.addAll(cashMovies)
                 } else {
-                    movies.addAll(x)
+                    movies.addAll(listAfterFilter)
                 }
                 notifyDataSetChanged()
             }
+        }
+    }
+
+    private fun filterFromList(
+        list: List<LocalMovieItemViewModel>,
+        results: Collection<String>
+    ): List<LocalMovieItemViewModel> {
+        return list.filter {
+                    results.contains(
+                        it.title
+                    )
         }
     }
 }
