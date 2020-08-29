@@ -5,9 +5,7 @@ import com.swvl.moviesdmb.models.GetAllRepository
 import com.swvl.moviesdmb.models.LocalMovie
 import com.swvl.moviesdmb.models.Pagination
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
-import java.io.IOException
 import java.io.InputStream
 
 
@@ -29,7 +27,7 @@ class LocalMovieRepository(
 
     private fun fetchLocalMovie(): LocalMovieResult {
         val movies = mutableListOf<LocalMovie>()
-        try {
+        kotlin.runCatching {
             val jsonObject = JSONObject(parseJSONData())
             val jsonArray = jsonObject.getJSONArray("movies")
             for (i in 0 until jsonArray.length()) {
@@ -42,7 +40,7 @@ class LocalMovieRepository(
                 movies.add(LocalMovie(title, year, cast, genres, rating))
             }
 
-        } catch (ex: JSONException) {
+        }.getOrElse { ex ->
             ex.printStackTrace()
         }
         return LocalMovieResult(movies)
@@ -59,16 +57,14 @@ class LocalMovieRepository(
 
     private fun parseJSONData(): String {
         val JsonString: String?
-        JsonString = try {
+        JsonString = kotlin.runCatching {
             val sizeOfJSONFile: Int = inputStream.available()
             val bytes = ByteArray(sizeOfJSONFile)
             inputStream.read(bytes)
             inputStream.close()
             String(bytes, Charsets.UTF_8)
-        } catch (ex: IOException) {
-            ex.printStackTrace()
-            return ""
-        }
+        }.getOrDefault("")
+
         return JsonString
     }
 }

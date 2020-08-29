@@ -21,18 +21,18 @@ class LocalMovieListViewModel(private val localMovieRepository: GetAllRepository
 
     private fun getLocalMovieList() = viewModelScope.launch {
         moviesItem.postValue(Resource.loading(data = null))
-        try {
+        kotlin.runCatching {
             moviesItem.postValue(
                 Resource.success(data = localMovieRepository.getAllById(1)
                     .map { movie ->
                         movie.toLocalMovieItemViewModel()
                     })
             )
-        } catch (exception: Exception) {
+        }.getOrElse { ex ->
             moviesItem.postValue(
                 Resource.error(
                     data = null,
-                    message = exception.message ?: "Error Occurred!"
+                    message = ex.message ?: "Error Occurred!"
                 )
             )
         }
