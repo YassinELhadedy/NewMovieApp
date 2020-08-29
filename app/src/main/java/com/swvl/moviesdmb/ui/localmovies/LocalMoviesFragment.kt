@@ -35,12 +35,12 @@ class LocalMoviesFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        requireActivity().menuInflater.inflate(R.menu.main_menu,menu)
+        requireActivity().menuInflater.inflate(R.menu.main_menu, menu)
         val item = menu.findItem(R.id.action_search)
         val searchView = item.actionView as SearchView
-        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-               return false
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {

@@ -23,7 +23,7 @@ val applicationModule = module {
     single { setupRoomDao(androidContext()) }
     single { OkHttpClientProvider().provideOkHttpClient }
     single { RetrofitFactory(get()).apiService }
-    single { setupInputStream(androidContext()) }
+//    single { setupInputStream(androidContext()) } //FIXME: must'nt be singleton in order to support rotation. if its singleton then fetch once and then close transactions. and throw (org.json.JSONException: End of input at character 0 of) for second fetch trial.
 
     // Repositories
     single { ReviewsRepository(get()) }
@@ -43,5 +43,5 @@ val applicationModule = module {
     viewModel { PopularMovieListViewModel(MovieProxyRepository(get(), get())) }
     viewModel { MovieDetailViewModel(get()) }
     viewModel { PopularMoreMovieListViewModel(get()) }
-    viewModel { LocalMovieListViewModel(LocalMovieRepository(get())) }
+    viewModel { LocalMovieListViewModel(LocalMovieRepository(setupInputStream(androidContext()))) }
 }
