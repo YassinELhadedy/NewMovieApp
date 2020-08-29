@@ -57,7 +57,7 @@ class LocalMovieRepository(
         return newList
     }
 
-    fun parseJSONData(): String {
+    private fun parseJSONData(): String {
         val JsonString: String?
         JsonString = try {
             val sizeOfJSONFile: Int = inputStream.available()
