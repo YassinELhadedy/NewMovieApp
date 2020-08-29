@@ -1,6 +1,7 @@
 package com.swvl.moviesdmb.ui.localmovies.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -8,8 +9,10 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.swvl.moviesdmb.R
 import com.swvl.moviesdmb.databinding.ItemLocalMovieBinding
+import com.swvl.moviesdmb.ui.MainActivity
 import java.util.*
 
 class LocalMovieGroupAdapter(
@@ -61,16 +64,19 @@ class LocalMovieGroupAdapter(
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
 
-                val filterList = mutableListOf<String>()
+                val filterList = mutableListOf<LocalMovieItemViewModel>()
                 if (constraint.toString().isEmpty()) {
-                    filterList.addAll(movies.map { it.title })
+                    filterList.addAll(cashMovies)
                 } else {
-                    for (movie in cashMovies) {
-                        if (movie.title.toLowerCase(Locale.getDefault())
+                    if (constraint.toString().toIntOrNull() != null) {
+                        filterList.addAll(cashMovies.filter { localMovie ->
+                            localMovie.year.toString().contains(constraint.toString())
+                        })
+                    } else {
+                        filterList.addAll(cashMovies.filter { localMovie ->
+                            localMovie.title.toLowerCase(Locale.getDefault())
                                 .contains(constraint.toString().toLowerCase(Locale.getDefault()))
-                        ) {
-                            filterList.add(movie.title)
-                        }
+                        })
                     }
                 }
 
@@ -82,27 +88,37 @@ class LocalMovieGroupAdapter(
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                val listAfterFilter =
-                    filterFromList(cashMovies, (results?.values as Collection<String>))
                 movies.clear()
-                if (constraint.toString().isEmpty()) {
-                    movies.addAll(cashMovies)
-                } else {
-                    movies.addAll(listAfterFilter)
-                }
+                movies.addAll(results?.values as Collection<LocalMovieItemViewModel>)
                 notifyDataSetChanged()
+
+                checkCountAndShowNumberOfMovies(
+                    constraint.toString(),
+                    (results.values as Collection<LocalMovieItemViewModel>).size.toString()
+                )
             }
         }
     }
 
-    private fun filterFromList(
-        list: List<LocalMovieItemViewModel>,
-        results: Collection<String>
-    ): List<LocalMovieItemViewModel> {
-        return list.filter {
-                    results.contains(
-                        it.title
-                    )
+    private fun checkCountAndShowNumberOfMovies(textSearch: String, count: String) {
+        if (textSearch.toIntOrNull() != null) {
+            showSnackBar("Movie Year", count)
+        } else {
+            if (textSearch.isEmpty()) {
+                showSnackBar("...", count)
+            } else {
+                showSnackBar("Movie Name", count)
+            }
+
         }
+    }
+
+    private fun showSnackBar(searchType: String, message: String) {
+
+        Snackbar.make(
+            (context as MainActivity).findViewById(android.R.id.content),
+            "Searching By ${searchType}.......-> $message Movies",
+            Snackbar.LENGTH_INDEFINITE
+        ).setTextColor(Color.RED).show()
     }
 }
