@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class PopularMovieListViewModel(private val movieProxyRepository: AbstractProxyGetRepository<Movie, Movie>) :
     ViewModel() {
-     var pageIndex = 1
+    var pageIndex = 1
 
     val moviesItem = MutableLiveData<Resource<List<MovieItemViewModel>>>()
     var items: List<MovieItemViewModel>? = null
@@ -32,7 +32,7 @@ class PopularMovieListViewModel(private val movieProxyRepository: AbstractProxyG
     private fun getPopularMovieList() = viewModelScope.launch {
         moviesItem.postValue(Resource.loading(data = null))
         _dataLoading.value = true
-        try {
+        kotlin.runCatching {
             moviesItem.postValue(
                 Resource.success(data = movieProxyRepository.getAllById(pageIndex)
                     .map { movie ->
@@ -40,12 +40,12 @@ class PopularMovieListViewModel(private val movieProxyRepository: AbstractProxyG
                         movie.toMovieItemViewModel()
                     })
             )
-        } catch (exception: Exception) {
+        }.getOrElse { ex ->
             _dataLoading.value = false
             moviesItem.postValue(
                 Resource.error(
                     data = null,
-                    message = exception.message ?: "Error Occurred!"
+                    message = ex.message ?: "Error Occurred!"
                 )
             )
         }

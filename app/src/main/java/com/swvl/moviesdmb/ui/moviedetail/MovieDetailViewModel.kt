@@ -13,15 +13,18 @@ class MovieDetailViewModel(
 
     fun getMovieDetail(movieId: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
-        try {
+        kotlin.runCatching {
             emit(
                 Resource.success(
-                    data = DetailItemViewModel(detailMovieService.getDetailMovie(movieId).first,detailMovieService.getDetailMovie(movieId).second,
-                        detailMovieService.getDetailMovie(movieId).third)
+                    data = DetailItemViewModel(
+                        detailMovieService.getDetailMovie(movieId).first,
+                        detailMovieService.getDetailMovie(movieId).second,
+                        detailMovieService.getDetailMovie(movieId).third
+                    )
                 )
             )
-        } catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+        }.getOrElse { ex ->
+            emit(Resource.error(data = null, message = ex.message ?: "Error Occurred!"))
         }
     }
 }
